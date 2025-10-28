@@ -5,22 +5,38 @@ This document describes how database indexes were implemented to improve query p
 
 ---
 
-## 1. Identified High-Usage Columns
-| Table | Columns Indexed | Reason |
-|--------|-----------------|--------|
-| users | email | Used frequently in authentication and searches |
-| bookings | user_id, property_id | Used in JOINs and filtering user or property bookings |
-| properties | location, price | Used in filtering and sorting listings |
+-- Create indexes to improve performance in frequently queried columns
 
----
+-- 1️⃣ User table: index on email (commonly used in login queries)
+CREATE INDEX idx_users_email
+ON users (email);
 
-## 2. SQL Index Commands
-```sql
-CREATE INDEX idx_users_email ON users (email);
-CREATE INDEX idx_bookings_user_id ON bookings (user_id);
-CREATE INDEX idx_bookings_property_id ON bookings (property_id);
-CREATE INDEX idx_properties_location ON properties (location);
-CREATE INDEX idx_properties_price ON properties (price);
+-- 2️⃣ Bookings table: index on user_id and property_id (used in JOINs)
+CREATE INDEX idx_bookings_user_id
+ON bookings (user_id);
+
+CREATE INDEX idx_bookings_property_id
+ON bookings (property_id);
+
+-- 3️⃣ Properties table: index on location and price (used in filters)
+CREATE INDEX idx_properties_location
+ON properties (location);
+
+CREATE INDEX idx_properties_price
+ON properties (price);
+
+-- ✅ Measure query performance before and after adding indexes
+
+-- Before creating indexes (baseline)
+EXPLAIN ANALYZE SELECT * FROM bookings WHERE user_id = 5;
+
+EXPLAIN ANALYZE SELECT * FROM properties WHERE location = 'Nairobi';
+
+-- After creating indexes
+EXPLAIN ANALYZE SELECT * FROM bookings WHERE user_id = 5;
+
+EXPLAIN ANALYZE SELECT * FROM properties WHERE location = 'Nairobi';
+
 3. Performance Measurement
 Before Indexing:
 
