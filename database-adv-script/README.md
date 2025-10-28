@@ -24,3 +24,13 @@ Find all users who have made more than 3 bookings.
 
 ### File
 - `subqueries.sql` — Contains both correlated and non-correlated subquery examples.
+## Aggregations and Window Functions
+
+### 1. Aggregation Query
+Find the total number of bookings made by each user using `COUNT()` and `GROUP BY`.
+
+### 2. Window Function Query
+Rank properties based on the total number of bookings they have received using `RANK()`.
+
+### File
+- `aggregations_and_window_functions.sql` — Contains both queries.
