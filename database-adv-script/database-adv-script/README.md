@@ -1,16 +1,36 @@
-SQL Joins Queries
+-- INNER JOIN: Retrieve all bookings and the respective users who made those bookings
+SELECT 
+    users.id AS user_id,
+    users.username,
+    users.email,
+    bookings.id AS booking_id,
+    bookings.property_id,
+    bookings.check_in,
+    bookings.check_out
+FROM bookings
+INNER JOIN users
+ON bookings.user_id = users.id;
 
-Objective
-Practice using different types of SQL joins to query multiple related tables in the Airbnb database.
+-- LEFT JOIN: Retrieve all properties and their reviews, including properties that have no reviews
+SELECT 
+    properties.id AS property_id,
+    properties.title,
+    properties.location,
+    reviews.id AS review_id,
+    reviews.rating,
+    reviews.comment
+FROM properties
+LEFT JOIN reviews
+ON properties.id = reviews.property_id;
 
- Queries Included
-1. **INNER JOIN** – Retrieve all bookings and the respective users who made those bookings.  
-2. **LEFT JOIN** – Retrieve all properties and their reviews, including those without reviews.  
-3. **FULL OUTER JOIN** – Retrieve all users and all bookings, even if they are not linked.
+-- FULL OUTER JOIN: Retrieve all users and all bookings, even if the user has no booking or a booking has no linked user
+SELECT 
+    users.id AS user_id,
+    users.username,
+    bookings.id AS booking_id,
+    bookings.property_id,
+    bookings.check_in
+FROM users
+FULL OUTER JOIN bookings
+ON users.id = bookings.user_id;
 
- Files
-- `joins_queries.sql` — Contains the SQL join queries.
-- `README.md` — This documentation file.
-
-Author
-Becky Nyongesa
