@@ -1,10 +1,3 @@
-# Index Performance Optimization Report
-
-## Overview
-This document describes how database indexes were implemented to improve query performance across the **Users**, **Bookings**, and **Properties** tables in the Airbnb project.
-
----
-
 -- Create indexes to improve performance in frequently queried columns
 
 -- 1️⃣ User table: index on email (commonly used in login queries)
@@ -37,25 +30,3 @@ EXPLAIN ANALYZE SELECT * FROM bookings WHERE user_id = 5;
 
 EXPLAIN ANALYZE SELECT * FROM properties WHERE location = 'Nairobi';
 
-3. Performance Measurement
-Before Indexing:
-
-Query on bookings.user_id took ~220ms
-
-Query on properties.location took ~300ms
-
-After Indexing:
-
-Query on bookings.user_id took ~40ms
-
-Query on properties.location took ~70ms
-
-4. Tools Used
-
-EXPLAIN and ANALYZE SQL commands to measure performance.
-
-PostgreSQL database engine for testing.
-
-5. Summary
-
-Indexes significantly improved read query performance across high-traffic tables, especially for user and property-related operations. Write operations slightly increased in cost due to index maintenance, but overall system efficiency improve
